@@ -21,15 +21,11 @@ export default function ResumenFinanciero() {
     const mes = hoy.getMonth() + 1;
     const año = hoy.getFullYear();
 
-    let proximoCobro;
-    if (diaHoy < 10) {
-      proximoCobro = new Date(año, mes - 1, 10);
-    } else {
-      proximoCobro = new Date(año, mes, 10);
-    }
-
-    const diferencia = proximoCobro - hoy;
-    setDiasRestantes(Math.ceil(diferencia / (1000 * 60 * 60 * 24)));
+    // Calcular días restantes hasta el 06/07/2025
+    const fechaObjetivo = new Date("2025-07-06T00:00:00"); // Domingo 06 de julio
+    const diferencia = fechaObjetivo - hoy;
+    const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
+    setDiasRestantes(dias > 0 ? dias : 0);
 
     const fetchSueldos = async () => {
       try {
@@ -111,7 +107,8 @@ export default function ResumenFinanciero() {
   return (
     <div className="resumen-financiero">
       <div className="dias-cobro">
-        Días hasta cobro: <strong className="dias-numero">{diasRestantes}</strong>
+        Días hasta el domingo 06 de julio:{" "}
+        <strong className="dias-numero">{diasRestantes}</strong>
       </div>
       <div className="resumen-linea">
         <div className="item">
@@ -121,10 +118,6 @@ export default function ResumenFinanciero() {
         <div className="item">
           <span>Total gastado</span>
           <strong>${totalGastos.toFixed(2)}</strong>
-        </div>
-        <div className="item">
-          <span>Total ahorrado</span>
-          <strong>${ahorro.toFixed(2)}</strong>
         </div>
       </div>
     </div>

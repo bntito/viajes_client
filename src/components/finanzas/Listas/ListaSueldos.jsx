@@ -23,16 +23,16 @@ export default function ListaSueldos() {
 
   return (
     <div className="sueldos-lista">
-      <h2 className="sueldos-titulo">Listado de Sueldos Mensuales</h2>
+      <h2 className="sueldos-titulo">Transferencias</h2>
       <table className="sueldos-tabla">
         <thead>
           <tr>
-            <th>Fecha de Cobro</th>
-            <th>Sueldo Mensual</th>
-            <th>Uso Ticket Comida</th>
-            <th>Adelanto</th>
-            <th>Descuentos</th>
-            <th>Sueldo Líquido</th>
+            <th>Fecha de depósito</th>
+            <th>Monto</th>
+            {/* <th>Uso Ticket Comida</th> */}
+            {/* <th>Adelanto</th> */}
+            {/* <th>Descuentos</th> */}
+            {/* <th>Sueldo Líquido</th> */}
           </tr>
         </thead>
         <tbody>
@@ -47,16 +47,16 @@ export default function ListaSueldos() {
 
             return (
               <tr key={sueldo.id}>
-                <td data-label="Fecha de Cobro">
+                <td data-label="Fecha de depósito">
                   {`${String(sueldo.diaDeCobro).padStart(2, "0")}/${String(sueldo.mes).padStart(2, "0")}/${sueldo.año}`}
                 </td>
-                <td data-label="Sueldo Mensual">${sueldoMensual.toFixed(2)}</td>
-                <td data-label="Uso Ticket Comida">
+                <td data-label="Monto">${sueldoMensual.toFixed(2)}</td>
+                {/* <td data-label="Uso Ticket Comida">
                   ${usoTicketComida.toFixed(2)} ({cantidadTickets} ticket{cantidadTickets !== 1 ? "s" : ""})
                 </td>
                 <td data-label="Adelanto">${adelanto.toFixed(2)}</td>
                 <td data-label="Descuentos">${descuentos.toFixed(2)}</td>
-                <td data-label="Sueldo Líquido">${sueldoLiquido.toFixed(2)}</td>
+                <td data-label="Sueldo Líquido">${sueldoLiquido.toFixed(2)}</td> */}
               </tr>
             );
           })}

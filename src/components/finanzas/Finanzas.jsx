@@ -10,7 +10,7 @@ export default function Finanzas() {
   return (
     <div>
       <ResumenFinanciero />
-      <RegistroAhorro />
+      {/* <RegistroAhorro /> */}
       <IngresoGasto />
       <Sueldo />
 

@@ -63,10 +63,10 @@ export default function RegistroSueldoMensual() {
 
   return (
     <div className="mensual-form">
-      <h2 className="mensual-titulo">Registro Sueldo Mensual</h2>
+      <h2 className="mensual-titulo">Registro de Transferencia</h2>
       <form onSubmit={handleSubmit} className="mensual-grid">
         <label>
-          Fecha de Cobro:
+          Fecha de Transferencia:
           <input
             type="date"
             name="fechaCobro"
@@ -77,7 +77,7 @@ export default function RegistroSueldoMensual() {
         </label>
 
         <label>
-          Sueldo Mensual:
+          Monto:
           <input
             type="number"
             name="sueldoMensual"
@@ -88,7 +88,7 @@ export default function RegistroSueldoMensual() {
           />
         </label>
 
-        <label>
+        {/* <label>
           Descuentos:
           <input
             type="number"
@@ -97,9 +97,9 @@ export default function RegistroSueldoMensual() {
             onChange={handleChange}
             min="0"
           />
-        </label>
+        </label> */}
 
-        <label>
+        {/* <label>
           Ticket Comida Usado:
           <input
             type="number"
@@ -109,9 +109,9 @@ export default function RegistroSueldoMensual() {
             min="0"
           />
           <span className="ticket-total">Total: ${totalTickets.toFixed(2)}</span>
-        </label>
+        </label> */}
 
-        <label>
+        {/* <label>
           Adelanto:
           <input
             type="number"
@@ -120,7 +120,7 @@ export default function RegistroSueldoMensual() {
             onChange={handleChange}
             min="0"
           />
-        </label>
+        </label> */}
 
         <button type="submit" className="mensual-submit">Registrar</button>
       </form>
