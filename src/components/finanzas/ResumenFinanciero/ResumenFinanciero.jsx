@@ -1,0 +1,132 @@
+import { useEffect, useState } from "react";
+import "./resumenFinanciero.css";
+
+export default function ResumenFinanciero() {
+  const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
+  const apiSueldos = `${hostServer}/api/sueldomensual`;
+  const apiGastos = `${hostServer}/api/gasto`;
+  const apiAhorro = `${hostServer}/api/ahorro`;
+
+  const [sueldo, setSueldo] = useState(0);
+  const [descuentos, setDescuentos] = useState(0);
+  const [usoTicket, setUsoTicket] = useState(0);
+  const [adelanto, setAdelanto] = useState(0);
+  const [gastos, setGastos] = useState([]);
+  const [ahorro, setAhorro] = useState(0);
+  const [diasRestantes, setDiasRestantes] = useState(0);
+
+  useEffect(() => {
+    const hoy = new Date();
+    const diaHoy = hoy.getDate();
+    const mes = hoy.getMonth() + 1;
+    const año = hoy.getFullYear();
+
+    let proximoCobro;
+    if (diaHoy < 10) {
+      proximoCobro = new Date(año, mes - 1, 10);
+    } else {
+      proximoCobro = new Date(año, mes, 10);
+    }
+
+    const diferencia = proximoCobro - hoy;
+    setDiasRestantes(Math.ceil(diferencia / (1000 * 60 * 60 * 24)));
+
+    const fetchSueldos = async () => {
+      try {
+        const mesConDosDigitos = mes.toString().padStart(2, '0');
+        const resSueldo = await fetch(`${apiSueldos}?mes=${mesConDosDigitos}&anio=${año}`);
+        const dataSueldo = await resSueldo.json();
+
+        const sueldosFiltrados = dataSueldo.dataServerResult.filter(
+          (item) => item.mes === mesConDosDigitos && item.año === año
+        );
+
+        if (sueldosFiltrados.length > 0) {
+          const totalSueldo = sueldosFiltrados.reduce((acc, item) => acc + parseFloat(item.sueldoMensual), 0);
+          const totalAdelanto = sueldosFiltrados.reduce((acc, item) => acc + parseFloat(item.adelanto), 0);
+          const totalDescuentos = sueldosFiltrados.reduce((acc, item) => acc + parseFloat(item.descuentos), 0);
+          const totalTicket = sueldosFiltrados.reduce((acc, item) => acc + parseFloat(item.usoTicketComida), 0);
+
+          setSueldo(totalSueldo);
+          setAdelanto(totalAdelanto);
+          setDescuentos(totalDescuentos);
+          setUsoTicket(totalTicket);
+        }
+      } catch (error) {
+        console.error("Error al cargar sueldos:", error);
+      }
+    };
+
+    const fetchGastos = async () => {
+      try {
+        const resGastos = await fetch(`${apiGastos}?mes=${mes.toString().padStart(2, '0')}&anio=${año}`);
+        const dataGastos = await resGastos.json();
+
+        const gastosFiltrados = dataGastos.dataServerResult.filter((gasto) => {
+          const fechaGasto = new Date(gasto.fecha);
+          return (
+            fechaGasto.getMonth() + 1 === mes &&
+            fechaGasto.getFullYear() === año
+          );
+        });
+
+        setGastos(gastosFiltrados);
+      } catch (error) {
+        console.error("Error al cargar gastos:", error);
+      }
+    };
+
+    const fetchAhorros = async () => {
+      try {
+        const resAhorro = await fetch(apiAhorro);
+        const dataAhorro = await resAhorro.json();
+
+        const totalAhorro = dataAhorro.dataServerResult.reduce(
+          (acc, item) => acc + parseFloat(item.monto),
+          0
+        );
+
+        setAhorro(totalAhorro);
+      } catch (error) {
+        console.error("Error al cargar ahorros:", error);
+      }
+    };
+
+    fetchSueldos();
+    fetchGastos();
+    fetchAhorros();
+  }, []);
+
+  const totalGastos = gastos.reduce((acc, compra) => {
+    if (!compra.gastos) return acc;
+    const sumaGastosCompra = compra.gastos.reduce(
+      (subAcc, gasto) => subAcc + parseFloat(gasto.monto || 0),
+      0
+    );
+    return acc + sumaGastosCompra;
+  }, 0);
+
+  const restante = sueldo - descuentos - adelanto - totalGastos;
+
+  return (
+    <div className="resumen-financiero">
+      <div className="dias-cobro">
+        Días hasta cobro: <strong className="dias-numero">{diasRestantes}</strong>
+      </div>
+      <div className="resumen-linea">
+        <div className="item">
+          <span>Saldo restante</span>
+          <strong>${restante.toFixed(2)}</strong>
+        </div>
+        <div className="item">
+          <span>Total gastado</span>
+          <strong>${totalGastos.toFixed(2)}</strong>
+        </div>
+        <div className="item">
+          <span>Total ahorrado</span>
+          <strong>${ahorro.toFixed(2)}</strong>
+        </div>
+      </div>
+    </div>
+  );
+}

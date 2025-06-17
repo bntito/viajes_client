@@ -1,0 +1,53 @@
+.resumen-financiero {
+  font-family: Arial, sans-serif;
+  font-size: 0.72rem;
+  color: #444;
+  width: 100%;
+  max-width: none;
+  margin: 0.6rem 0;
+  padding: 0.55rem 1rem; /* padding lateral agregado */
+  background: #f5f5f5;
+  border-radius: 6px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.dias-cobro {
+  text-align: center;
+  margin-bottom: 0.45rem; /* +0.05 rem */
+  color: #666;
+  font-weight: 500;
+}
+
+.dias-numero {
+  color: #108114;
+  font-weight: bold;
+  font-size: 0.78rem;
+}
+
+.resumen-linea {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.55rem; /* +0.05 rem */
+}
+
+.item {
+  flex: 1;
+  background: #fff;
+  padding: 0.45rem; /* +0.05 rem */
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.item span {
+  display: block;
+  margin-bottom: 0.25rem; /* +0.05 rem */
+  color: #888;
+  font-weight: 400;
+}
+
+.item strong {
+  color: #1a73e8;
+  font-size: 0.82rem; /* +0.02 */
+}

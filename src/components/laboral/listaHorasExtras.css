@@ -1,0 +1,137 @@
+/* Estilos generales de la tabla */
+.tabla-container {
+  margin: 1.5rem auto;
+  max-width: 800px;
+  background-color: #333;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  overflow-x: auto;
+}
+
+.tabla-titulo {
+  text-align: center;
+  margin-bottom: 0.8rem;
+  color: #00bfff;
+  font-size: 1.2rem;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.tabla th,
+.tabla td {
+  border: 1px solid #555;
+  padding: 0.05rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: #f1f1f1;
+  text-align: center;
+}
+
+.tabla th {
+  background-color: #007bff;
+  color: white;
+  font-weight: 700;
+}
+
+.tabla td:nth-child(5) {
+  text-align: left;
+  word-break: break-word;
+}
+
+.tabla tr:nth-child(even) {
+  background-color: #444;
+}
+
+.tabla tr:hover {
+  background-color: #555;
+}
+
+.btn-editar,
+.btn-borrar {
+  background: none;
+  border: none;
+  font-size: .7rem;
+  cursor: pointer;
+  margin: 0 0.1em;
+}
+
+.btn-editar:hover {
+  color: #00ffcc;
+}
+
+.btn-borrar:hover {
+  color: #ff6666;
+}
+
+/* Modal oscuro */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #333; /* Fondo oscuro para el modal */
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  color: #f1f1f1; /* Texto claro */
+}
+
+.modal .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #f1f1f1; /* Icono de cerrar en color claro */
+}
+
+.modal form label {
+  display: block;
+  margin-bottom: 10px;
+  color: #f1f1f1; /* Etiquetas en color claro */
+}
+
+.modal form input,
+.modal form select,
+.modal form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 10px;
+  background-color: #444; /* Fondo oscuro para inputs */
+  border: 1px solid #555;
+  color: #f1f1f1; /* Texto claro */
+}
+
+.modal form input:focus,
+.modal form select:focus,
+.modal form textarea:focus {
+  border-color: #00bfff; /* Resaltado de borde al enfocar */
+}
+
+.modal form button {
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.modal form button:hover {
+  background-color: #0056b3;
+}

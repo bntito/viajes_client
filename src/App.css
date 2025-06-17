@@ -1,0 +1,39 @@
+/* Reset general de margenes y paddings */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212; /* Fondo oscuro general */
+  font-size: 1rem;
+  color: #e0e0e0; /* Texto claro */
+}
+
+/* App.css - Estilos específicos para TTechApp */
+
+/* Contenedor principal de la aplicación */
+.bitacora-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #121212; /* Fondo oscuro */
+  color: #e0e0e0; /* Texto claro */
+}
+
+/* Estilos para el contenido principal */
+.bitacora-content {
+  flex-grow: 1; /* Hace que el contenido ocupe el espacio disponible */
+  padding: 0;
+  background-color: #1c1c1c; /* Fondo más oscuro para el contenido */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  margin: 0;
+  /* margin-top: 60px; */
+}
+
+.conteiner-general {
+  display: flex;
+}

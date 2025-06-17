@@ -1,0 +1,22 @@
+/* Clases específicas para el componente About */
+.about-section {
+  padding: 20px;
+  background-color: #f4f4f4;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.about-title, .about-subtitle {
+  color: #333;
+}
+
+.about-list {
+  list-style-type: disc;
+  margin-left: 20px;
+  color: #333;
+}
+
+.about-description {
+  font-size: 1.1rem;
+  color: #555;
+}

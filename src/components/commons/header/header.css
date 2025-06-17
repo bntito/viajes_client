@@ -1,0 +1,33 @@
+/* Clases específicas para el componente Header */
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+.header-nav {
+  display: flex;
+  justify-content: center;
+}
+
+.header-list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.header-item {
+  margin: 0 15px;
+}
+
+.header-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.header-link:hover {
+  color: #f4f4f4;
+}
