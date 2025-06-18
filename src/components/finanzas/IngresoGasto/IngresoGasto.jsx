@@ -154,9 +154,11 @@ export default function IngresoGasto() {
           + Agregar artículo
         </button>
 
-        <div className="gastos-total">
-          Total: U$S {total.toFixed(2)} / ${convertir(total, tasaUYU)} UYU / ${convertir(total, tasaMXN)} MXN
-        </div>
+       <div className="gastos-total" style={{ textAlign: "right", marginTop: "0.5rem" }}>
+  <div>Total USD: U$S {total.toFixed(2)}</div>
+  <div>Total UYU: $ { (total * 39.5).toFixed(2) }</div>
+  <div>Total MXN: $ { (total * 17.2).toFixed(2) }</div>
+</div>
 
         <button
           type="submit"
