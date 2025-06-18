@@ -17,7 +17,7 @@ export default function ResumenFinanciero() {
 
   // Nueva moneda base: USD
   const tasaMXN = 17.3;
-  const tasaUYU = 38.5;
+  const tasaUYU = 39.5;
 
   useEffect(() => {
     const hoy = new Date();
