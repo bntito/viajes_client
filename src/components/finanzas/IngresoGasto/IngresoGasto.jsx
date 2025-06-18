@@ -154,12 +154,20 @@ export default function IngresoGasto() {
           + Agregar artículo
         </button>
 
-       <div className="gastos-total" style={{ textAlign: "right", marginTop: "0.5rem" }}>
-  <div>Total USD: U$S {total.toFixed(2)}</div>
-  <div>Total UYU: $ { (total * 39.5).toFixed(2) }</div>
-  <div>Total MXN: $ { (total * 17.2).toFixed(2) }</div>
+<div className="gastos-total">
+  <div className="total-row">
+    <span>Total USD:</span>
+    <span>U$S {total.toFixed(2)}</span>
+  </div>
+  <div className="total-row">
+    <span>Total UYU:</span>
+    <span>$ { (total * 39.5).toFixed(2) }</span>
+  </div>
+  <div className="total-row">
+    <span>Total MXN:</span>
+    <span>$ { (total * 17.2).toFixed(2) }</span>
+  </div>
 </div>
-
         <button
           type="submit"
           className="gastos-submit"
