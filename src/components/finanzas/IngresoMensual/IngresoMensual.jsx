@@ -12,9 +12,9 @@ export default function RegistroSueldoMensual() {
   const [form, setForm] = useState({
     fechaCobro: "",
     sueldoMensual: "",
-    descuentos: "",
-    usoTicketComida: "",
-    adelanto: ""
+    descuentos: "0",
+    usoTicketComida: "0",
+    adelanto: "0"
   });
 
   const handleChange = (e) => {

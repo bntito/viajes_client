@@ -15,21 +15,23 @@ export default function ResumenFinanciero() {
   const [ahorro, setAhorro] = useState(0);
   const [diasRestantes, setDiasRestantes] = useState(0);
 
+  // Nueva moneda base: USD
+  const tasaMXN = 17.3;
+  const tasaUYU = 38.5;
+
   useEffect(() => {
     const hoy = new Date();
-    const diaHoy = hoy.getDate();
     const mes = hoy.getMonth() + 1;
     const año = hoy.getFullYear();
 
-    // Calcular días restantes hasta el 06/07/2025
-    const fechaObjetivo = new Date("2025-07-06T00:00:00"); // Domingo 06 de julio
+    const fechaObjetivo = new Date("2025-07-06T00:00:00");
     const diferencia = fechaObjetivo - hoy;
     const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
     setDiasRestantes(dias > 0 ? dias : 0);
 
     const fetchSueldos = async () => {
       try {
-        const mesConDosDigitos = mes.toString().padStart(2, '0');
+        const mesConDosDigitos = mes.toString().padStart(2, "0");
         const resSueldo = await fetch(`${apiSueldos}?mes=${mesConDosDigitos}&anio=${año}`);
         const dataSueldo = await resSueldo.json();
 
@@ -43,6 +45,7 @@ export default function ResumenFinanciero() {
           const totalDescuentos = sueldosFiltrados.reduce((acc, item) => acc + parseFloat(item.descuentos), 0);
           const totalTicket = sueldosFiltrados.reduce((acc, item) => acc + parseFloat(item.usoTicketComida), 0);
 
+          // Supongamos que vienen en USD ahora
           setSueldo(totalSueldo);
           setAdelanto(totalAdelanto);
           setDescuentos(totalDescuentos);
@@ -55,15 +58,12 @@ export default function ResumenFinanciero() {
 
     const fetchGastos = async () => {
       try {
-        const resGastos = await fetch(`${apiGastos}?mes=${mes.toString().padStart(2, '0')}&anio=${año}`);
+        const resGastos = await fetch(`${apiGastos}?mes=${mes.toString().padStart(2, "0")}&anio=${año}`);
         const dataGastos = await resGastos.json();
 
         const gastosFiltrados = dataGastos.dataServerResult.filter((gasto) => {
           const fechaGasto = new Date(gasto.fecha);
-          return (
-            fechaGasto.getMonth() + 1 === mes &&
-            fechaGasto.getFullYear() === año
-          );
+          return fechaGasto.getMonth() + 1 === mes && fechaGasto.getFullYear() === año;
         });
 
         setGastos(gastosFiltrados);
@@ -104,20 +104,35 @@ export default function ResumenFinanciero() {
 
   const restante = sueldo - descuentos - adelanto - totalGastos;
 
+  const convertir = (valor, tasa) => (valor * tasa).toFixed(2);
+
   return (
     <div className="resumen-financiero">
       <div className="dias-cobro">
         Días hasta el domingo 06 de julio:{" "}
         <strong className="dias-numero">{diasRestantes}</strong>
       </div>
-      <div className="resumen-linea">
-        <div className="item">
-          <span>Saldo restante</span>
-          <strong>${restante.toFixed(2)}</strong>
+
+      <div className="resumen-tabla">
+        <div className="resumen-encabezado">
+          <div className="columna">Concepto</div>
+          <div className="columna">USD</div>
+          <div className="columna">MXN</div>
+          <div className="columna">UYU</div>
         </div>
-        <div className="item">
-          <span>Total gastado</span>
-          <strong>${totalGastos.toFixed(2)}</strong>
+
+        <div className="resumen-fila">
+          <div className="columna">Saldo restante</div>
+          <div className="columna">U$S {restante.toFixed(2)}</div>
+          <div className="columna">$ {convertir(restante, tasaMXN)}</div>
+          <div className="columna">$ {convertir(restante, tasaUYU)}</div>
+        </div>
+
+        <div className="resumen-fila">
+          <div className="columna">Total gastado</div>
+          <div className="columna">U$S {totalGastos.toFixed(2)}</div>
+          <div className="columna">$ {convertir(totalGastos, tasaMXN)}</div>
+          <div className="columna">$ {convertir(totalGastos, tasaUYU)}</div>
         </div>
       </div>
     </div>

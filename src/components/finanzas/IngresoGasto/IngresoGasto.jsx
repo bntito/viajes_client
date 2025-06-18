@@ -150,7 +150,7 @@ export default function IngresoGasto() {
         </button>
 
         <div className="gastos-total">
-          Total: ${total.toFixed(2)}
+          Total: U$S {total.toFixed(2)}
         </div>
 
         <button

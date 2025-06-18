@@ -7,6 +7,11 @@ export default function ListaSueldos() {
 
   const [sueldos, setSueldos] = useState([]);
 
+  const tasaUYU = 38.5; // 1 USD = 38.5 UYU
+  const tasaMXN = 17.2; // 1 USD = 17.2 MXN
+
+  const convertir = (valorUSD, tasa) => (valorUSD * tasa).toFixed(2);
+
   useEffect(() => {
     const fetchSueldos = async () => {
       try {
@@ -28,35 +33,23 @@ export default function ListaSueldos() {
         <thead>
           <tr>
             <th>Fecha de depósito</th>
-            <th>Monto</th>
-            {/* <th>Uso Ticket Comida</th> */}
-            {/* <th>Adelanto</th> */}
-            {/* <th>Descuentos</th> */}
-            {/* <th>Sueldo Líquido</th> */}
+            <th>Monto (USD)</th>
+            <th>Monto (UYU)</th>
+            <th>Monto (MXN)</th>
           </tr>
         </thead>
         <tbody>
           {sueldos.map((sueldo) => {
             const sueldoMensual = parseFloat(sueldo.sueldoMensual || 0);
-            const descuentos = parseFloat(sueldo.descuentos || 0);
-            const usoTicketComida = parseFloat(sueldo.usoTicketComida || 0);
-            const adelanto = parseFloat(sueldo.adelanto || 0);
-            const sueldoLiquido = sueldoMensual - descuentos;
-            const ticketUnidad = 190;
-            const cantidadTickets = usoTicketComida / ticketUnidad;
 
             return (
               <tr key={sueldo.id}>
                 <td data-label="Fecha de depósito">
                   {`${String(sueldo.diaDeCobro).padStart(2, "0")}/${String(sueldo.mes).padStart(2, "0")}/${sueldo.año}`}
                 </td>
-                <td data-label="Monto">${sueldoMensual.toFixed(2)}</td>
-                {/* <td data-label="Uso Ticket Comida">
-                  ${usoTicketComida.toFixed(2)} ({cantidadTickets} ticket{cantidadTickets !== 1 ? "s" : ""})
-                </td>
-                <td data-label="Adelanto">${adelanto.toFixed(2)}</td>
-                <td data-label="Descuentos">${descuentos.toFixed(2)}</td>
-                <td data-label="Sueldo Líquido">${sueldoLiquido.toFixed(2)}</td> */}
+                <td data-label="Monto (USD)">${sueldoMensual.toFixed(2)}</td>
+                <td data-label="Monto (UYU)">${convertir(sueldoMensual, tasaUYU)}</td>
+                <td data-label="Monto (MXN)">${convertir(sueldoMensual, tasaMXN)}</td>
               </tr>
             );
           })}
