@@ -132,6 +132,9 @@
   font-size: 0.9rem;
   color: #555;
   font-weight: 600;
-  margin-top: 0.8rem;
 }
 
+.gastos-total {
+  line-height: 1.2;
+  margin-top: 0.5rem;
+}
