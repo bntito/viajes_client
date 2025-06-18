@@ -13,6 +13,19 @@ export default function ListaGastos() {
 
   const convertir = (valorUSD, tasa) => (valorUSD * tasa).toFixed(2);
 
+  // Función para formatear fecha a dd/mm/AAAA
+  const formatearFecha = (fechaStr) => {
+    if (!fechaStr) return "";
+    const fecha = new Date(fechaStr);
+    if (isNaN(fecha)) return fechaStr; // si no es fecha válida, devuelvo el original
+
+    const dia = fecha.getDate().toString().padStart(2, "0");
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+    const anio = fecha.getFullYear();
+
+    return `${dia}/${mes}/${anio}`;
+  };
+
   useEffect(() => {
     const fetchGastos = async () => {
       try {
@@ -54,7 +67,7 @@ export default function ListaGastos() {
             return (
               <React.Fragment key={gasto.id}>
                 <tr>
-                  <td data-label="Fecha">{gasto.fecha}</td>
+                  <td data-label="Fecha">{formatearFecha(gasto.fecha)}</td>
                   <td data-label="Total USD">${totalUSD.toFixed(2)}</td>
                   <td data-label="Total UYU">${convertir(totalUSD, tasaUYU)}</td>
                   <td data-label="Total MXN">${convertir(totalUSD, tasaMXN)}</td>

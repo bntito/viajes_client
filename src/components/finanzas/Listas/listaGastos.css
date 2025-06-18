@@ -2,7 +2,7 @@
   width: 100%;
   max-width: none;
   margin: 1rem 0;
-  padding: 0.8rem 1rem;
+  padding: 0.3rem 0.4rem; /* menos padding */
   background: #fdf6f6;
   border-radius: 8px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.07);
@@ -16,14 +16,14 @@
   margin-bottom: 0.8rem;
   font-weight: 600;
   color: #b33636;
-  font-size: 1rem;
+  font-size: 0.9rem; /* letra un poco más chica */
 }
 
 .gastos-tabla {
   width: 100%;
   border-collapse: separate;
   border-spacing: 1px 0;
-  font-size: 0.8rem;
+  font-size: 0.55rem; /* letra más chica */
 }
 
 .gastos-tabla thead th {
@@ -36,7 +36,7 @@
 }
 
 .gastos-tabla tbody td {
-  padding: 0.3rem 0.5rem;
+  padding: 0.25rem 0.4rem; /* menos padding */
   border-bottom: 1px solid #ccc;
   color: #444;
   vertical-align: middle;
@@ -53,13 +53,13 @@
 .articulos-detalle {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* un poco más chico también */
   margin-top: 0.3rem;
 }
 
 .articulos-detalle th,
 .articulos-detalle td {
-  padding: 0.25rem 0.4rem;
+  padding: 0.2rem 0.3rem; /* menos padding */
   border: 1px solid #ddd;
   text-align: left;
   color: #555;
@@ -80,13 +80,13 @@
   background-color: #b33636;
   color: white;
   border: none;
-  padding: 0.25rem 0.5rem;
+  padding: 0.2rem 0.4rem; /* menos padding */
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.76rem;
+  font-size: 0.68rem; /* más chico */
   font-weight: 500;
   transition: background-color 0.25s;
-  width: 90px;
+  width: 80px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -100,7 +100,7 @@
 /* Acciones: Ver, Editar, Borrar */
 .gastos-tabla td[data-label="Acciones"] {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.3rem;
   justify-content: flex-end;
   flex-wrap: wrap;
   min-width: 140px;
@@ -110,16 +110,16 @@
 .fila-edicion {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
   align-items: center;
-  padding: 0.6rem 0;
+  padding: 0.3rem 0; /* menos padding */
   border-top: 1px solid #ccc;
 }
 
 .fila-edicion input {
   width: 130px;
-  padding: 0.3rem 0.5rem;
-  font-size: 0.8rem;
+  padding: 0.25rem 0.4rem; /* menos padding */
+  font-size: 0.7rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
@@ -127,9 +127,11 @@
 
 .botones-edicion {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.3rem;
 }
 
 .botones-edicion button {
-  width: 90px;
+  width: 80px;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
 }
