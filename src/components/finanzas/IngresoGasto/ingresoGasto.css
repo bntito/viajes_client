@@ -148,8 +148,8 @@
 
 .total-row span:first-child {
   text-align: left;
-  font-weight: 500;
-  color: #666;
+  font-weight: 700; /* NEGRITA para "Total USD/UYU/MXN" */
+  color: #333;
 }
 
 .total-row span:last-child {
