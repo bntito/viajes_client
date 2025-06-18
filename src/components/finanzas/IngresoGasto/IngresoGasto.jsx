@@ -12,6 +12,11 @@ export default function IngresoGasto() {
   const [fecha, setFecha] = useState("");
   const [articulos, setArticulos] = useState([{ descripcion: "", monto: "" }]);
 
+  const tasaUYU = 38.5; // 1 USD = 38.5 UYU
+  const tasaMXN = 17.2; // 1 USD = 17.2 MXN
+
+  const convertir = (usd, tasa) => (usd * tasa).toFixed(2);
+
   const handleFechaChange = (e) => {
     setFecha(e.target.value);
   };
@@ -150,7 +155,7 @@ export default function IngresoGasto() {
         </button>
 
         <div className="gastos-total">
-          Total: U$S {total.toFixed(2)}
+          Total: U$S {total.toFixed(2)} / ${convertir(total, tasaUYU)} UYU / ${convertir(total, tasaMXN)} MXN
         </div>
 
         <button
