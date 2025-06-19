@@ -10,12 +10,18 @@ export default function IngresoGasto() {
   const { createData } = useFetch(null);
 
   const [fecha, setFecha] = useState("");
-  const [articulos, setArticulos] = useState([{ descripcion: "", monto: "" }]);
+  const [articulos, setArticulos] = useState([
+    { descripcion: "", monto: "", moneda: "USD" },
+  ]);
 
-  const tasaUYU = 38.5; // 1 USD = 38.5 UYU
-  const tasaMXN = 17.2; // 1 USD = 17.2 MXN
+  const tasas = {
+    USD: 1,
+    UYU: 39.5,
+    MXN: 17.2,
+  };
 
-  const convertir = (usd, tasa) => (usd * tasa).toFixed(2);
+  const convertirAMonedaBase = (monto, moneda) =>
+    parseFloat(monto) / tasas[moneda];
 
   const handleFechaChange = (e) => {
     setFecha(e.target.value);
@@ -29,17 +35,17 @@ export default function IngresoGasto() {
   };
 
   const agregarArticulo = () => {
-    setArticulos([...articulos, { descripcion: "", monto: "" }]);
+    setArticulos([...articulos, { descripcion: "", monto: "", moneda: "USD" }]);
   };
 
   const quitarArticulo = (index) => {
-    const nuevosArticulos = articulos.filter((_, i) => i !== index);
-    setArticulos(nuevosArticulos);
+    setArticulos(articulos.filter((_, i) => i !== index));
   };
 
-  const total = articulos.reduce((acc, item) => {
-    const montoNum = parseFloat(item.monto);
-    return acc + (isNaN(montoNum) ? 0 : montoNum);
+  const totalUSD = articulos.reduce((acc, item) => {
+    const monto = parseFloat(item.monto);
+    if (isNaN(monto)) return acc;
+    return acc + convertirAMonedaBase(monto, item.moneda);
   }, 0);
 
   const handleSubmit = async (e) => {
@@ -51,14 +57,11 @@ export default function IngresoGasto() {
     }
 
     for (let i = 0; i < articulos.length; i++) {
-      if (
-        !articulos[i].descripcion.trim() ||
-        !articulos[i].monto ||
-        isNaN(parseFloat(articulos[i].monto))
-      ) {
+      const { descripcion, monto } = articulos[i];
+      if (!descripcion.trim() || !monto || isNaN(parseFloat(monto))) {
         Swal.fire(
           "Error",
-          `Por favor completa la descripción y monto válido del artículo #${i + 1}`,
+          `Completa la descripción y un monto válido para el artículo #${i + 1}`,
           "error"
         );
         return;
@@ -67,10 +70,10 @@ export default function IngresoGasto() {
 
     const compraCompleta = {
       fecha,
-      total,
+      total: totalUSD,
       articulos: articulos.map((item) => ({
         descripcion: item.descripcion,
-        monto: parseFloat(item.monto),
+        monto: convertirAMonedaBase(parseFloat(item.monto), item.moneda), // convertidos a USD
       })),
     };
 
@@ -86,7 +89,7 @@ export default function IngresoGasto() {
       });
 
       setFecha("");
-      setArticulos([{ descripcion: "", monto: "" }]);
+      setArticulos([{ descripcion: "", monto: "", moneda: "USD" }]);
     } catch {
       Swal.fire("Error", "No se pudo guardar la compra", "error");
     }
@@ -133,6 +136,16 @@ export default function IngresoGasto() {
               step="0.01"
               style={{ flex: 1 }}
             />
+            <select
+              name="moneda"
+              value={articulo.moneda}
+              onChange={(e) => handleArticuloChange(index, e)}
+              style={{ flex: 1 }}
+            >
+              <option value="USD">USD</option>
+              <option value="UYU">UYU</option>
+              <option value="MXN">MXN</option>
+            </select>
             {articulos.length > 1 && (
               <button
                 type="button"
@@ -148,31 +161,28 @@ export default function IngresoGasto() {
         <button
           type="button"
           onClick={agregarArticulo}
-          style={{ marginTop: "0.5rem" }}
           className="btn-add-art"
+          style={{ marginTop: "0.5rem" }}
         >
           + Agregar artículo
         </button>
 
-<div className="gastos-total">
-  <div className="total-row">
-    <span>Total USD:</span>
-    <span>U$S {total.toFixed(2)}</span>
-  </div>
-  <div className="total-row">
-    <span>Total UYU:</span>
-    <span>$ { (total * 39.5).toFixed(2) }</span>
-  </div>
-  <div className="total-row">
-    <span>Total MXN:</span>
-    <span>$ { (total * 17.2).toFixed(2) }</span>
-  </div>
-</div>
-        <button
-          type="submit"
-          className="gastos-submit"
-          style={{ marginTop: "1rem" }}
-        >
+        <div className="gastos-total">
+          <div className="total-row">
+            <span><strong>Total USD:</strong></span>
+            <span>U$S {totalUSD.toFixed(2)}</span>
+          </div>
+          <div className="total-row">
+            <span><strong>Total UYU:</strong></span>
+            <span>$ { (totalUSD * tasas.UYU).toFixed(2) }</span>
+          </div>
+          <div className="total-row">
+            <span><strong>Total MXN:</strong></span>
+            <span>$ { (totalUSD * tasas.MXN).toFixed(2) }</span>
+          </div>
+        </div>
+
+        <button type="submit" className="gastos-submit" style={{ marginTop: "1rem" }}>
           Agregar
         </button>
       </form>
