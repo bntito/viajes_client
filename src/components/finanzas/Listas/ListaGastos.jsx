@@ -13,7 +13,6 @@ export default function ListaGastos() {
 
   const convertir = (valorUSD, tasa) => (valorUSD * tasa).toFixed(2);
 
-  // Función para formatear fecha a dd/mm/AAAA
   const formatearFecha = (fechaStr) => {
     if (!fechaStr) return "";
     const fecha = new Date(fechaStr);
