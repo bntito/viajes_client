@@ -8,8 +8,8 @@ export default function ListaGastos() {
   const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
   const api = `${hostServer}/api/gasto`;
 
-  const tasaUYU = 39.5; // 1 USD = 39.5 UYU
-  const tasaMXN = 17.2; // 1 USD = 17.2 MXN
+  const tasaUYU = 39.5;
+  const tasaMXN = 17.2;
 
   const convertir = (valorUSD, tasa) => (valorUSD * tasa).toFixed(2);
 
