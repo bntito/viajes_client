@@ -110,53 +110,72 @@ export default function IngresoGasto() {
           />
         </label>
 
-        {articulos.map((articulo, index) => (
-          <div
-            key={index}
-            className="articulo-row"
-            style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
-          >
-            <input
-              type="text"
-              name="descripcion"
-              placeholder="Descripción"
-              value={articulo.descripcion}
-              onChange={(e) => handleArticuloChange(index, e)}
-              required
-              style={{ flex: 3 }}
-            />
-            <input
-              type="number"
-              name="monto"
-              placeholder="Monto"
-              value={articulo.monto}
-              onChange={(e) => handleArticuloChange(index, e)}
-              required
-              min="0"
-              step="0.01"
-              style={{ flex: 1 }}
-            />
-            <select
-              name="moneda"
-              value={articulo.moneda}
-              onChange={(e) => handleArticuloChange(index, e)}
-              style={{ flex: 1 }}
+        {articulos.map((articulo, index) => {
+          const montoValido = parseFloat(articulo.monto);
+          const montoUYU = isNaN(montoValido)
+            ? ""
+            : ((montoValido / tasas[articulo.moneda]) * tasas.UYU).toFixed(2);
+
+          return (
+            <div
+              key={index}
+              className="articulo-row"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.3rem",
+                marginBottom: "1rem",
+              }}
             >
-              <option value="USD">USD</option>
-              <option value="UYU">UYU</option>
-              <option value="MXN">MXN</option>
-            </select>
-            {articulos.length > 1 && (
-              <button
-                type="button"
-                onClick={() => quitarArticulo(index)}
-                style={{ flex: "0 0 auto" }}
-              >
-                &times;
-              </button>
-            )}
-          </div>
-        ))}
+              <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                <input
+                  type="text"
+                  name="descripcion"
+                  placeholder="Descripción"
+                  value={articulo.descripcion}
+                  onChange={(e) => handleArticuloChange(index, e)}
+                  required
+                  style={{ flex: 3 }}
+                />
+                <input
+                  type="number"
+                  name="monto"
+                  placeholder="Monto"
+                  value={articulo.monto}
+                  onChange={(e) => handleArticuloChange(index, e)}
+                  required
+                  min="0"
+                  step="0.01"
+                  style={{ flex: 1 }}
+                />
+                <select
+                  name="moneda"
+                  value={articulo.moneda}
+                  onChange={(e) => handleArticuloChange(index, e)}
+                  style={{ flex: 1 }}
+                >
+                  <option value="USD">USD</option>
+                  <option value="UYU">UYU</option>
+                  <option value="MXN">MXN</option>
+                </select>
+                {articulos.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => quitarArticulo(index)}
+                    style={{ flex: "0 0 auto" }}
+                  >
+                    &times;
+                  </button>
+                )}
+              </div>
+              {montoUYU && (
+                <div style={{ fontSize: "0.9rem", color: "#555" }}>
+                  ≈ $ {montoUYU} UYU
+                </div>
+              )}
+            </div>
+          );
+        })}
 
         <button
           type="button"
