@@ -99,17 +99,23 @@ export default function IngresoGasto() {
     <div className="gastos-form">
       <h2 className="gastos-titulo-bis">Nuevo Gasto</h2>
       <form onSubmit={handleSubmit} className="gastos-grid">
-        <label>
-          Fecha:
-          <input
-            type="date"
-            name="fecha"
-            value={fecha}
-            onChange={handleFechaChange}
-            required
-          />
-        </label>
 
+        {/* Fecha */}
+        <div style={{ width: "100%" }}>
+          <label style={{ display: "block", width: "100%" }}>
+            Fecha:
+            <input
+              type="date"
+              name="fecha"
+              value={fecha}
+              onChange={handleFechaChange}
+              required
+              style={{ width: "100%" }}
+            />
+          </label>
+        </div>
+
+        {/* Artículos */}
         {articulos.map((articulo, index) => {
           const montoValido = parseFloat(articulo.monto);
           const montoUYU = isNaN(montoValido)
@@ -117,17 +123,16 @@ export default function IngresoGasto() {
             : ((montoValido / tasas[articulo.moneda]) * tasas.UYU).toFixed(2);
 
           return (
-            <div
-              key={index}
-              className="articulo-row"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.3rem",
-                marginBottom: "1rem",
-              }}
-            >
-              <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+            <div key={index} style={{ width: "100%" }}>
+              <div
+                className="articulo-row"
+                style={{
+                  display: "flex",
+                  gap: "0.5rem",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
                 <input
                   type="text"
                   name="descripcion"
@@ -169,7 +174,7 @@ export default function IngresoGasto() {
                 )}
               </div>
               {montoUYU && (
-                <div style={{ fontSize: "0.9rem", color: "#555" }}>
+                <div style={{ fontSize: "0.9rem", color: "#555", marginTop: "0.2rem" }}>
                   ≈ $ {montoUYU} UYU
                 </div>
               )}
