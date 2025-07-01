@@ -58,7 +58,8 @@ export default function ResumenFinanciero() {
 
     const fetchGastos = async () => {
       try {
-        const resGastos = await fetch(`${apiGastos}?mes=${mes.toString().padStart(2, "0")}&anio=${año}`);
+        // const resGastos = await fetch(`${apiGastos}?mes=${mes.toString().padStart(2, "0")}&anio=${año}`);
+        const resGastos = await fetch(apiGastos);
         const dataGastos = await resGastos.json();
 
         const gastosFiltrados = dataGastos.dataServerResult.filter((gasto) => {
